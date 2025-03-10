@@ -1,15 +1,6 @@
 # Flask & Server
 flask
 
-# Email Handling
-smtplib
-email  # Standard library, but sometimes needed explicitly in environments
-
-# Threading (built-in module, no need to install separately)
-
-# File Handling & OS Operations
-os  # Built-in, no need to install
-
 # OpenCV
 opencv-python-headless
 
@@ -37,9 +28,3 @@ tqdm
 
 # PDF Generation
 reportlab
-
-Flask
-opencv-python
-
-
-
