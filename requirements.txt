@@ -40,9 +40,6 @@ reportlab
 
 Flask
 opencv-python
-smtplib
-email
-threading
-os
+
 
 
