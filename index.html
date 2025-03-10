@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Emotion Recognition</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        input[type="file"], input[type="email"] {
+            margin-bottom: 20px;
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Upload Video for Emotion Recognition</h1>
+        <input type="email" id="emailInput" placeholder="Enter your email" required>
+        <input type="file" id="videoInput" accept="video/*" required>
+        <button onclick="uploadVideo()">Upload and Process</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        async function uploadVideo() {
+            const emailInput = document.getElementById('emailInput');
+            const fileInput = document.getElementById('videoInput');
+            const resultDiv = document.getElementById('result');
+
+            // Validate email and file input
+            if (!emailInput.value || !fileInput.files[0]) {
+                alert("Please fill in your email and select a video file.");
+                return;
+            }
+
+            // Create FormData object
+            const formData = new FormData();
+            formData.append('email', emailInput.value); // Add email to the request
+            formData.append('video', fileInput.files[0]); // Add video file to the request
+
+            resultDiv.textContent = "Processing... Please wait.";
+
+            try {
+                // Send POST request to the server
+                const response = await fetch('/process', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    resultDiv.textContent = data.message;
+                    checkEmailStatus();
+                } else {
+                    resultDiv.textContent = "Error: " + data.error;
+                }
+            } catch (error) {
+                resultDiv.textContent = "Failed to upload video. Please try again.";
+            }
+        }
+
+        async function checkEmailStatus() {
+            const resultDiv = document.getElementById('result');
+
+            try {
+                const response = await fetch('/check_email');
+                const data = await response.json();
+
+                if (response.ok) {
+                    resultDiv.textContent += " " + data.message;
+                } else {
+                    resultDiv.textContent += " Error checking email status.";
+                }
+            } catch (error) {
+                resultDiv.textContent += " Failed to check email status.";
+            }
+        }
+    </script>
+</body>
+</html>
