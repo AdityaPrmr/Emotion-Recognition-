@@ -4,6 +4,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import threading
 import os
+os.environ["DISPLAY"] = ":99"
 import cv2
 from processEmotion import doIt
 from email.mime.base import MIMEBase
