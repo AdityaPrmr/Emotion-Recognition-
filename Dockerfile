@@ -1,26 +1,25 @@
-# Use an official Python runtime as a parent image
-FROM python:3.11
+# Use PyTorch's official CPU image (ensures compatibility)
+FROM pytorch/pytorch:latest
 
-# Set the working directory in the container
+# Set working directory
 WORKDIR /app
 
-# Install required system dependencies
+# Install system dependencies for OpenCV, Librosa, and other packages
 RUN apt-get update && apt-get install -y \
     libgl1-mesa-glx \
     libglib2.0-0 \
+    ffmpeg \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements.txt first (for caching)
+# Copy dependency list and install required Python libraries
 COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Install dependencies
-RUN pip install --no-cache-dir -i https://pypi.org/simple -r requirements.txt
-
-# Copy the rest of the app's code
+# Copy all project files into the container
 COPY . .
 
-# Expose port 5000 for Flask
+# Expose port required for Flask
 EXPOSE 10000
 
-# Command to run the application
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:$PORT", "app:app"]
+# Start the application with Gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:$PORT", "app:app"]

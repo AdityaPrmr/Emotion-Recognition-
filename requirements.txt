@@ -1,7 +1,8 @@
+flask
 numpy
 pandas
 scikit-learn
-torch
+torch  # Installed via pytorch/pytorch:latest
 joblib
 tqdm
 matplotlib
@@ -11,7 +12,7 @@ opencv-python-headless==4.9.0.80
 librosa
 pydub
 moviepy
-flask
 transformers
 deepface
 openai-whisper
+gunicorn
