@@ -13,6 +13,7 @@ librosa
 pydub
 moviepy==1.0.3
 transformers
+tf-keras
 deepface
 openai-whisper
 gunicorn
