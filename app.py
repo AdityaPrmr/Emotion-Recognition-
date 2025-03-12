@@ -4,7 +4,6 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import threading
 import os
-os.environ["DISPLAY"] = ":99"
 import cv2
 from processEmotion import doIt
 from email.mime.base import MIMEBase
@@ -14,13 +13,13 @@ from email import encoders
 
 
 app = Flask(__name__)
-
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 # Function to send email
 def send_email(email):
     sender_email = "phoenix00100gaming@gmail.com"
     app_password = "zxpt jncd pnse mfbm"  # Use an App Password, NOT your Gmail password
-    pdf_path = "./EmotionRecogniation/pdfs/output.pdf"
+    pdf_path = os.path.join(BASE_DIR, "EmotionRecogniation", "pdfs", "output.pdf")
     message = MIMEMultipart()
     message["From"] = sender_email
     message["To"] = email
@@ -84,7 +83,7 @@ def process_video():
 
     # Save the video file
     video_file = request.files['video']
-    video_path = os.path.join("./EmotionRecogniation", "sample.mp4")
+    video_path = os.path.join(BASE_DIR, "EmotionRecogniation", "sample.mp4")
     video_file.save(video_path)
 
     # # Start a background thread to process the video
@@ -99,5 +98,6 @@ def check_email():
     return jsonify({"message": "\nEmail has been sent."})
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 10000))  # Use Render's assigned PORT or default to 10000
-    app.run(host='0.0.0.0', port=port, debug=False)  # Set debug=False for production
+    port = int(os.environ.get("PORT", 10000))  # Keep as fallback
+    host = '0.0.0.0'  # Critical for external access
+    app.run(host=host, port=port, debug=False)

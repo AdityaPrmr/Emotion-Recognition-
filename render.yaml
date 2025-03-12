@@ -1,0 +1,11 @@
+services:
+  - name: flask-app
+    type: web
+    env: docker
+    plan: free
+    dockerContext: .
+    dockerfilePath: Dockerfile
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: 10000

@@ -1,29 +1,17 @@
-# Flask & Server
-flask
-
-# OpenCV
-opencv-python-headless
-# Data Processing
-pandas
 numpy
+pandas
+scikit-learn
 torch
 joblib
-
-# Audio & Video Processing
-librosa
-openai-whisper
-moviepy
-pydub
-
-# Machine Learning & NLP
-deepface
-transformers
-scikit-learn
-
-# Visualization
-seaborn
-matplotlib
 tqdm
-
-# PDF Generation
+matplotlib
+seaborn
 reportlab
+opencv-python-headless==4.9.0.80
+librosa
+pydub
+moviepy
+flask
+transformers
+deepface
+openai-whisper
